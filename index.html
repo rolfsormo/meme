@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="phase1" style="display: none;">
+            <h1>Phase 1</h1>
+            <input type="text" id="img" placeholder="Image URL"/><br/>
+            <input type="text" id="upper" placeholder="Upper"/><br/>
+            <input type="text" id="lower" placeholder="Lower"/><br/>
+            <input type="submit" value="Update" id="update"/><br/>
+        </div>
+        <div clasS="phase2" style="display: none;">
+            <h1>Phase 2</h1>
+            <canvas id="myCanvas" width="800" height="1800"></canvas>
+
+            <br/>
+            <a href="#">Back</a>
+        </div>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://rawgit.com/BuddyMeme/Meme.js/master/meme.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/purl/2.3.1/purl.min.js"></script>
+
+        <script>
+            function update() {
+                console.log('hash', location.hash);
+                if ((location.hash || '').length) {
+                    $('.phase2').show();
+                    $('.phase1').hide();
+
+                    var p = $.url(location);
+
+//                    Meme('http://rolf.lucid.fi/100kg.jpg', 'myCanvas', 'hello', 'world');
+                    Meme(p.fparam('img'), 'myCanvas', p.fparam('u'), p.fparam('l'));
+                } else {
+                    $('.phase1').show();
+                    $('.phase2').hide();
+                }
+            }
+            $(function() {
+                update();
+                $(window).on('hashchange',update);
+                $('#update').click(function() {
+                    location.hash = 'img=' + $('#img').val() + '&u=' + $('#upper').val() + '&l=' + $('#lower').val();
+                });
+            });
+        </script>
+
+    </body>
+</html>

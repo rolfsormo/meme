@@ -37,7 +37,7 @@ SOFTWARE.
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -45,35 +45,30 @@ SOFTWARE.
         <![endif]-->
 
         <div class="phase1" style="display: none;">
-            <h1>Phase 1</h1>
             <input type="text" id="img" placeholder="Image URL"/><br/>
             <input type="text" id="upper" placeholder="Upper"/><br/>
             <input type="text" id="lower" placeholder="Lower"/><br/>
-            <input type="submit" value="Update" id="update"/><br/>
+            <input type="submit" value="Generate" id="update"/><br/>
         </div>
         <div clasS="phase2" style="display: none;">
-            <h1>Phase 2</h1>
-            <canvas id="myCanvas" width="800" height="1800"></canvas>
-
+            <canvas id="myCanvas"></canvas>
             <br/>
-            <a href="#">Back</a>
+            <a href="#">Create new</a>
         </div>
 
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://rawgit.com/BuddyMeme/Meme.js/master/meme.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/purl/2.3.1/purl.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/purl/2.3.1/purl.min.js"></script>
 
         <script>
             function update() {
-                console.log('hash', location.hash);
                 if ((location.hash || '').length) {
                     $('.phase2').show();
                     $('.phase1').hide();
 
                     var p = $.url(location);
 
-//                    Meme('http://rolf.lucid.fi/100kg.jpg', 'myCanvas', 'hello', 'world');
                     Meme(p.fparam('img'), 'myCanvas', p.fparam('u'), p.fparam('l'));
                 } else {
                     $('.phase1').show();
@@ -84,7 +79,7 @@ SOFTWARE.
                 update();
                 $(window).on('hashchange',update);
                 $('#update').click(function() {
-                    location.hash = 'img=' + $('#img').val() + '&u=' + $('#upper').val() + '&l=' + $('#lower').val();
+                    location.hash = 'img=' + encodeURIComponent($('#img').val()) + '&u=' + encodeURIComponent($('#upper').val()) + '&l=' + encodeURIComponent($('#lower').val());
                 });
             });
         </script>
